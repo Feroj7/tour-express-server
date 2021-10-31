@@ -23,14 +23,14 @@ async function run(){
         const destinationCollection = database.collection('destinations');
         const bookingCollection = database.collection('bookings');
 
-        //GET API
+        //GET API for all destinations
         app.get('/destinations', async(req, res) => {
             const cursor = destinationCollection.find({});
             const destinations = await cursor.toArray();
             res.send(destinations);
         })
 
-        //GET API byId
+        //GET API of destination byId
         app.get('/booking/:id', async(req, res) => {
             const id = req.params.id;
             const query = {_id:ObjectId(id)};
@@ -38,7 +38,7 @@ async function run(){
             res.send(destination);
         })
 
-        //GET API byEmail
+        //GET API of bookings byEmail
         app.get('/bookings/:email', async(req, res) => {
             const email = req.params.email;
             const query = {email: email};
@@ -60,14 +60,14 @@ async function run(){
             res.send(result);
         })
 
-        //POST API
+        //POST API for booking
         app.post('/bookings', async(req, res) => {
             const booking = req.body;
             const result = await bookingCollection.insertOne(booking);
             res.send(result);
         })
 
-        //UPDATE API
+        //UPDATE API for booking status
         app.put('/bookings/:id', async(req, res) => {
             const id = req.params.id;
             const filter = {_id:ObjectId(id)};
@@ -81,7 +81,7 @@ async function run(){
               res.send(result)
 ;        })
 
-        //DELETE API
+        //DELETE API for delete or cancel booking
         app.delete('/bookings/:id', async(req, res) => {
             const id = req.params.id;
             const query = {_id:ObjectId(id)};
